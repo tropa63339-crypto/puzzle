@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>GeoPuzzle - Казахстан</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            user-select: none;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        /* ===== ГЛАВНАЯ СТРАНИЦА ===== */
+        .main-page {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .main-page.hidden {
+            display: none;
+        }
+
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+        }
+
+        .left-panel img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        .left-panel h2 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .left-panel p {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
+            color: #555;
+        }
+
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .game-header h1 {
+            color: #667eea;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .game-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .game-preview {
+            width: 100%;
+            max-width: 300px;
+            height: 300px;
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            background-color: white;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .game-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .difficulty-selector label {
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .difficulty-selector select {
+            padding: 8px 15px;
+            font-size: 14px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            background-color: white;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .difficulty-selector select:hover {
+            border-color: #764ba2;
+            background-color: #f0f0f0;
+        }
+
+        .start-button {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .start-button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
+        }
+
+        /* ===== СТРАНИЦА ИГРЫ ===== */
+        .game-page {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        .game-page.active {
+            display: flex;
+        }
+
+        h1 {
+            color: white;
+            margin: 8px 0 6px 0;
+            font-size: 22px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            z-index: 10;
+        }
+
+        #controls {
+            width: 100%;
+            padding: 8px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        .control-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        label {
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        select {
+            padding: 6px 10px;
+            font-size: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            min-width: 90px;
+        }
+
+        select:active {
+            background-color: #45a049;
+        }
+
+        #startButton, .back-button, .music-toggle {
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #FF6B6B;
+            color: white;
+            transition: background-color 0.3s;
+            min-width: 75px;
+        }
+
+        .back-button {
+            background-color: #4CAF50;
+        }
+
+        .music-toggle {
+            background-color: #FF9800;
+            min-width: 50px;
+            padding: 8px 12px;
+        }
+
+        #startButton:active, .back-button:active, .music-toggle:active {
+            opacity: 0.8;
+        }
+
+        .music-toggle:hover {
+            background-color: #FB8C00;
+        }
+
+        #timerContainer {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 5px 12px;
+            border-radius: 6px;
+            margin: 4px 0;
+            display: none;
+            z-index: 10;
+        }
+
+        #timer {
+            color: #FFD700;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+        }
+
+        .game-wrapper {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #gameContainer {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            min-height: 0;
+        }
+
+        #gameCanvas {
+            border: 3px solid black;
+            touch-action: none;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background-color: white;
+            cursor: grab;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        #gameCanvas:active {
+            cursor: grabbing;
+        }
+
+        #piecesPanelContainer {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            border-top: 4px solid #4CAF50;
+            padding: 8px;
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            height: 140px;
+            overflow: hidden;
+        }
+
+        #piecesPanelContainer.active {
+            display: flex;
+        }
+
+        .panel-header {
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .panel-content {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            min-height: 0;
+        }
+
+        #piecesPanel {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 6px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 6px;
+            align-items: center;
+            flex: 1;
+            scroll-behavior: smooth;
+        }
+
+        #piecesPanel::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        #piecesPanel::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        #piecesPanel::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 3px;
+        }
+
+        .scroll-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+            font-weight: bold;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-button:active {
+            background-color: #45a049;
+        }
+
+        .piece-item {
+            position: relative;
+            cursor: grab;
+            border: 2px solid #FFD700;
+            border-radius: 3px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+            transition: transform 0.15s, box-shadow 0.15s;
+            flex-shrink: 0;
+            padding: 3px;
+            background: white;
+        }
+
+        .piece-item:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+
+        .piece-canvas {
+            display: block;
+            background-color: white;
+            touch-action: none;
+        }
+
+        .piece-number {
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            background: rgba(0, 0, 0, 0.9);
+            color: #FFD700;
+            font-weight: bold;
+            padding: 1px 4px;
+            border-radius: 2px;
+            font-size: 10px;
+        }
+
+        #finishMessage {
+            display: none;
+            background: white;
+            padding: 20px;
+            border: 3px solid #4CAF50;
+            border-radius: 12px;
+            text-align: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            max-width: 90%;
+        }
+
+        #finishMessage h2 {
+            color: #4CAF50;
+            margin: 0 0 10px 0;
+            font-size: 22px;
+        }
+
+        #timeTaken {
+            color: #333;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        #finishMessage button {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        #finishMessage button:active {
+            background-color: #45a049;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1500;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* АДАПТИВНОСТЬ */
+        @media (max-width: 1024px) {
+            .main-page {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+
+            .left-panel, .right-panel {
+                flex: 1;
+                padding: 20px;
+            }
+
+            .game-header h1 {
+                font-size: 28px;
+            }
+
+            .game-preview {
+                max-width: 250px;
+                height: 250px;
+            }
+
+            .left-panel h2 {
+                font-size: 22px;
+            }
+
+            .left-panel p {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-page {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .left-panel, .right-panel {
+                border-radius: 10px;
+                padding: 15px;
+            }
+
+            .game-header h1 {
+                font-size: 24px;
+            }
+
+            .game-preview {
+                max-width: 200px;
+                height: 200px;
+            }
+
+            .left-panel img {
+                max-width: 250px;
+            }
+
+            .left-panel h2 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+            .left-panel p {
+                font-size: 13px;
+            }
+
+            .start-button {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+
+            h1 {
+                font-size: 18px;
+                margin: 6px 0 4px 0;
+            }
+
+            #controls {
+                padding: 6px;
+                gap: 4px;
+            }
+
+            select {
+                font-size: 11px;
+                padding: 5px 8px;
+                min-width: 80px;
+            }
+
+            #startButton, .back-button, .music-toggle {
+                padding: 6px 14px;
+                font-size: 11px;
+            }
+
+            #timer {
+                font-size: 20px;
+            }
+
+            #piecesPanelContainer {
+                height: 130px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-page {
+                flex-direction: column;
+                gap: 8px;
+                padding: 8px;
+            }
+
+            .left-panel, .right-panel {
+                border-radius: 8px;
+                padding: 12px;
+            }
+
+            .game-header h1 {
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+
+            .game-header p {
+                font-size: 12px;
+            }
+
+            .game-preview {
+                max-width: 150px;
+                height: 150px;
+                margin-bottom: 15px;
+            }
+
+            .left-panel img {
+                max-width: 200px;
+                margin-bottom: 15px;
+            }
+
+            .left-panel h2 {
+                font-size: 18px;
+                margin-bottom: 8px;
+            }
+
+            .left-panel p {
+                font-size: 12px;
+                line-height: 1.5;
+            }
+
+            .difficulty-selector {
+                flex-direction: column;
+                gap: 8px;
+                margin-bottom: 15px;
+            }
+
+            .difficulty-selector label {
+                font-size: 13px;
+            }
+
+            .difficulty-selector select {
+                width: 100%;
+            }
+
+            .start-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 16px;
+                margin: 4px 0 2px 0;
+            }
+
+            #controls {
+                padding: 4px;
+                gap: 2px;
+            }
+
+            #startButton, .back-button, .music-toggle {
+                padding: 5px 10px;
+                font-size: 10px;
+            }
+
+            #timer {
+                font-size: 18px;
+            }
+
+            #piecesPanelContainer {
+                height: 120px;
+            }
+
+            .control-row {
+                gap: 4px;
+            }
+
+            .music-toggle {
+                min-width: 40px;
+                padding: 5px 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ГЛАВНАЯ СТРАНИЦА -->
+    <div class="main-page" id="mainPage">
+        <div class="left-panel">
+            <img src="shoqan.png" alt="Шокан Уалиханов">
+            <h2>Шокан Уалиханов</h2>
+            <p>
+                Шокан Валиханов (1835–1865) — выдающийся казахский ученый, этнограф, географ, офицер Российской империи и просветитель-демократ, получивший европейское образование в Омском кадетском корпусе. Он прославился исследованием Центральной Азии (экспедиция в Кашгар), изучением истории и фольклора казахов.
+            </p>
+        </div>
+
+        <div class="right-panel">
+            <div class="game-header">
+                <h1>🧩 GeoPuzzle</h1>
+                <p>Карта экспедиции Шокана Уалиханова</p>
+            </div>
+
+            <div class="game-preview">
+                <img src="kazakhstan_map.png" alt="Preview">
+            </div>
+
+            <div class="difficulty-selector">
+                <label for="mainDifficulty">Сложность:</label>
+                <select id="mainDifficulty">
+                    <option value="4">4x4 (16 деталей)</option>
+                    <option value="6">6x6 (36 деталей)</option>
+                    <option value="8">8x8 (64 детали)</option>
+                </select>
+            </div>
+
+            <button class="start-button" onclick="goToGame()">▶ НАЧАТЬ ИГРУ</button>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА ИГРЫ -->
+    <div class="game-page" id="gamePage">
+        <h1>🧩 GeoPuzzle - Казахстан</h1>
+        
+        <div id="controls">
+            <div class="control-row">
+                <label for="gameDifficulty">Сложность:</label>
+                <select id="gameDifficulty">
+                    <option value="4">4x4</option>
+                    <option value="6">6x6</option>
+                    <option value="8">8x8</option>
+                </select>
+                <button id="startButton" onclick="startGame()">▶ Старт</button>
+                <button class="back-button" onclick="goBack()">← Назад</button>
+                <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">🔊</button>
+            </div>
+        </div>
+
+        <div id="timerContainer">
+            <div id="timer">00:00</div>
+        </div>
+
+        <div class="game-wrapper">
+            <div id="gameContainer">
+                <canvas id="gameCanvas"></canvas>
+            </div>
+        </div>
+
+        <div id="piecesPanelContainer">
+            <div class="panel-header">Доступные детали</div>
+            <div class="panel-content">
+                <button class="scroll-button" onclick="scrollPiecesLeft()">◀</button>
+                <div id="piecesPanel"></div>
+                <button class="scroll-button" onclick="scrollPiecesRight()">▶</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div id="finishMessage">
+        <h2>🎉 Поздравляю! 🎉</h2>
+        <p>Пазл собран!</p>
+        <p id="timeTaken"></p>
+        <button onclick="playAgain()">Ещё раз</button>
+        <button onclick="goHome()">На главную</button>
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="background_music.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="winSound">
+        <source src="win_sound.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // ===== ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ =====
+        function goToGame() {
+            const difficulty = document.getElementById('mainDifficulty').value;
+            document.getElementById('mainPage').classList.add('hidden');
+            document.getElementById('gamePage').classList.add('active');
+            document.getElementById('gameDifficulty').value = difficulty;
+            loadImage();
+        }
+
+        function goBack() {
+            gameActive = false;
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('gamePage').classList.remove('active');
+            document.getElementById('mainPage').classList.remove('hidden');
+            finishMessage.style.display = 'none';
+            overlay.classList.remove('active');
+            timerContainer.style.display = 'none';
+            piecesPanelContainer.classList.remove('active');
+        }
+
+        function goHome() {
+            gameActive = false;
+            if (timerInterval) clearInterval(timerInterval);
+            backgroundMusic.pause();
+            document.getElementById('gamePage').classList.remove('active');
+            document.getElementById('mainPage').classList.remove('hidden');
+            finishMessage.style.display = 'none';
+            overlay.classList.remove('active');
+            timerContainer.style.display = 'none';
+            piecesPanelContainer.classList.remove('active');
+        }
+
+        // ===== УПРАВЛЕНИЕ МУЗЫКОЙ =====
+        let isMusicPlaying = true;
+        const musicToggle = document.getElementById('musicToggle');
+
+        function toggleMusic() {
+            const audio = document.getElementById('backgroundMusic');
+            if (isMusicPlaying) {
+                audio.pause();
+                musicToggle.textContent = '🔇';
+                isMusicPlaying = false;
+            } else {
+                audio.play().catch(() => {});
+                musicToggle.textContent = '🔊';
+                isMusicPlaying = true;
+            }
+        }
+
+        // ===== ИГРОВОЙ КОД =====
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const gameContainer = document.getElementById('gameContainer');
+        const finishMessage = document.getElementById('finishMessage');
+        const overlay = document.getElementById('overlay');
+        const timeTakenText = document.getElementById('timeTaken');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const winSound = document.getElementById('winSound');
+        const timerContainer = document.getElementById('timerContainer');
+        const timerDisplay = document.getElementById('timer');
+        const piecesPanel = document.getElementById('piecesPanel');
+        const piecesPanelContainer = document.getElementById('piecesPanelContainer');
+        const difficultySelect = document.getElementById('gameDifficulty');
+
+        let puzzleImage = new Image();
+        let pieces = [];
+        let rows = 4, cols = 4;
+        let pieceWidth, pieceHeight;
+        let scale = 1;
+        let startTime;
+        let draggedPiece = null;
+        let draggedFromPanel = false;
+        let offsetX, offsetY;
+        let gameActive = false;
+        let timerInterval = null;
+        let isGlobalDragAttached = false;
+        let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        const SNAP_DISTANCE = isMobile ? 100 : 80;
+        const PANEL_PIECE_SIZE = isMobile ? 80 : 90;
+
+        const kazakhstanImage = 'kazakhstan_map.png';
+
+        function loadImage() {
+            puzzleImage.src = kazakhstanImage;
+            puzzleImage.onload = () => {
+                adjustCanvasSize();
+                initGame();
+            };
+            puzzleImage.onerror = () => {
+                console.warn(`Ошибка загрузки файла: ${kazakhstanImage}`);
+            };
+        }
+
+        function adjustCanvasSize() {
+            const maxWidth = gameContainer.clientWidth - 20;
+            const maxHeight = gameContainer.clientHeight - 20;
+
+            const scaleWidth = maxWidth / puzzleImage.width;
+            const scaleHeight = maxHeight / puzzleImage.height;
+            scale = Math.min(1, scaleWidth, scaleHeight);
+
+            canvas.width = puzzleImage.width * scale;
+            canvas.height = puzzleImage.height * scale;
+
+            pieceWidth = canvas.width / cols;
+            pieceHeight = canvas.height / rows;
+        }
+
+        function initGame() {
+            adjustCanvasSize();
+            drawPuzzle();
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateTimer() {
+            const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+            timerDisplay.textContent = formatTime(elapsedSeconds);
+        }
+
+        function startGame() {
+            const difficulty = difficultySelect.value;
+            rows = cols = parseInt(difficulty);
+
+            adjustCanvasSize();
+            pieces = [];
+            gameActive = true;
+            draggedPiece = null;
+            draggedFromPanel = false;
+            startTime = Date.now();
+
+            if (timerInterval) clearInterval(timerInterval);
+
+            timerDisplay.textContent = '00:00';
+            timerContainer.style.display = 'block';
+            timerInterval = setInterval(updateTimer, 1000);
+
+            createPieces();
+            shufflePieces();
+            createPiecesPanel();
+            piecesPanelContainer.classList.add('active');
+            drawPuzzle();
+
+            if (isMusicPlaying) {
+                backgroundMusic.currentTime = 0;
+                backgroundMusic.play().catch(() => {});
+            }
+        }
+
+        function createPieces() {
+            const imgW = puzzleImage.width / cols;
+            const imgH = puzzleImage.height / rows;
+
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    pieces.push({
+                        id: row * cols + col,
+                        sx: col * imgW,
+                        sy: row * imgH,
+                        correctX: col * pieceWidth,
+                        correctY: row * pieceHeight,
+                        x: Math.random() * (canvas.width - pieceWidth),
+                        y: Math.random() * (canvas.height - pieceHeight),
+                        snapped: false,
+                        inPanel: true
+                    });
+                }
+            }
+        }
+
+        function shufflePieces() {
+            pieces.sort(() => Math.random() - 0.5);
+        }
+
+        function createPiecesPanel() {
+            piecesPanel.innerHTML = '';
+
+            pieces.forEach((piece, index) => {
+                if (!piece.snapped) {
+                    const container = document.createElement('div');
+                    container.className = 'piece-item';
+                    container.id = `piece-${piece.id}`;
+
+                    const pieceCanvas = document.createElement('canvas');
+                    pieceCanvas.className = 'piece-canvas';
+                    pieceCanvas.width = PANEL_PIECE_SIZE;
+                    pieceCanvas.height = PANEL_PIECE_SIZE;
+
+                    const pieceCtx = pieceCanvas.getContext('2d');
+                    pieceCtx.drawImage(
+                        puzzleImage,
+                        piece.sx, piece.sy,
+                        puzzleImage.width / cols, puzzleImage.height / rows,
+                        0, 0,
+                        PANEL_PIECE_SIZE, PANEL_PIECE_SIZE
+                    );
+                    pieceCtx.strokeStyle = '#000000';
+                    pieceCtx.lineWidth = 1.5;
+                    pieceCtx.strokeRect(0, 0, PANEL_PIECE_SIZE, PANEL_PIECE_SIZE);
+
+                    const numberDiv = document.createElement('div');
+                    numberDiv.className = 'piece-number';
+                    numberDiv.textContent = index + 1;
+
+                    container.appendChild(pieceCanvas);
+                    container.appendChild(numberDiv);
+
+                    container.addEventListener('mousedown', (e) => startDragFromPanel(e, piece), { passive: false });
+                    container.addEventListener('touchstart', (e) => startDragFromPanel(e, piece), { passive: false });
+
+                    piecesPanel.appendChild(container);
+                }
+            });
+        }
+
+        function scrollPiecesLeft() {
+            piecesPanel.scrollBy({ left: -100, behavior: 'smooth' });
+        }
+
+        function scrollPiecesRight() {
+            piecesPanel.scrollBy({ left: 100, behavior: 'smooth' });
+        }
+
+        function startDragFromPanel(e, piece) {
+            if (!gameActive) return;
+            e.preventDefault();
+            e.stopPropagation();
+
+            draggedPiece = piece;
+            draggedFromPanel = true;
+            piece.inPanel = false;
+
+            const x = e.touches ? e.touches[0].clientX : e.clientX;
+            const y = e.touches ? e.touches[0].clientY : e.clientY;
+
+            const canvasRect = canvas.getBoundingClientRect();
+            offsetX = pieceWidth / 2;
+            offsetY = pieceHeight / 2;
+            piece.x = x - canvasRect.left - offsetX;
+            piece.y = y - canvasRect.top - offsetY;
+
+            drawPuzzle();
+            attachGlobalDragListeners();
+        }
+
+        function drawGrid() {
+            ctx.strokeStyle = 'rgba(100, 150, 200, 0.25)';
+            ctx.lineWidth = 1.5;
+
+            for (let col = 1; col < cols; col++) {
+                const x = col * pieceWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+
+            for (let row = 1; row < rows; row++) {
+                const y = row * pieceHeight;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2.5;
+            ctx.strokeRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawPuzzle() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid();
+
+            for (const piece of pieces) {
+                if (!piece.inPanel) {
+                    ctx.drawImage(
+                        puzzleImage,
+                        piece.sx, piece.sy,
+                        puzzleImage.width / cols, puzzleImage.height / rows,
+                        piece.x, piece.y,
+                        pieceWidth, pieceHeight
+                    );
+
+                    if (piece.snapped) {
+                        ctx.strokeStyle = '#FFD700';
+                        ctx.lineWidth = 2.5;
+                    } else {
+                        ctx.strokeStyle = '#000000';
+                        ctx.lineWidth = 1.5;
+                    }
+                    ctx.strokeRect(piece.x, piece.y, pieceWidth, pieceHeight);
+                }
+            }
+        }
+
+        function checkSolved() {
+            return pieces.every(piece => piece.snapped);
+        }
+
+        function showFinishMessage() {
+            if (!gameActive) return;
+            gameActive = false;
+
+            if (timerInterval) clearInterval(timerInterval);
+
+            const endTime = Date.now();
+            const timeTaken = ((endTime - startTime) / 1000).toFixed(2);
+            timeTakenText.textContent = `⏱️ ${timeTaken} сек`;
+
+            if (isMusicPlaying) {
+                backgroundMusic.pause();
+            }
+            winSound.currentTime = 0;
+            winSound.play().catch(() => {});
+
+            overlay.classList.add('active');
+            finishMessage.style.display = 'block';
+        }
+
+        function getMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.touches ? e.touches[0].clientX : e.clientX;
+            const y = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: x - rect.left,
+                y: y - rect.top
+            };
+        }
+
+        function isInsidePiece(pos, piece) {
+            return pos.x >= piece.x && pos.x <= piece.x + pieceWidth &&
+                pos.y >= piece.y && pos.y <= piece.y + pieceHeight;
+        }
+
+        function startDragging(e) {
+            if (!gameActive || draggedFromPanel) return;
+            
+            const mousePos = getMousePos(e);
+            draggedPiece = pieces.find(piece => !piece.inPanel && isInsidePiece(mousePos, piece));
+
+            if (draggedPiece) {
+                e.preventDefault();
+                offsetX = mousePos.x - draggedPiece.x;
+                offsetY = mousePos.y - draggedPiece.y;
+                attachGlobalDragListeners();
+            }
+        }
+
+        function dragging(e) {
+            if (!draggedPiece || !gameActive) return;
+            e.preventDefault();
+
+            const canvasRect = canvas.getBoundingClientRect();
+            const x = e.touches ? e.touches[0].clientX : e.clientX;
+            const y = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            draggedPiece.x = x - canvasRect.left - offsetX;
+            draggedPiece.y = y - canvasRect.top - offsetY;
+
+            drawPuzzle();
+        }
+
+        function dropPiece(e) {
+            if (!draggedPiece || !gameActive) {
+                detachGlobalDragListeners();
+                return;
+            }
+            e.preventDefault();
+
+            const distX = Math.abs(draggedPiece.x - draggedPiece.correctX);
+            const distY = Math.abs(draggedPiece.y - draggedPiece.correctY);
+            const distance = Math.sqrt(distX * distX + distY * distY);
+
+            if (distance < SNAP_DISTANCE) {
+                draggedPiece.x = draggedPiece.correctX;
+                draggedPiece.y = draggedPiece.correctY;
+                draggedPiece.snapped = true;
+                createPiecesPanel();
+            } else if (draggedFromPanel) {
+                draggedPiece.inPanel = true;
+                createPiecesPanel();
+            }
+
+            draggedPiece = null;
+            draggedFromPanel = false;
+            drawPuzzle();
+            detachGlobalDragListeners();
+
+            if (checkSolved()) {
+                showFinishMessage();
+            }
+        }
+
+        function attachGlobalDragListeners() {
+            if (isGlobalDragAttached) return;
+            isGlobalDragAttached = true;
+            
+            document.addEventListener('mousemove', dragging, { passive: false });
+            document.addEventListener('touchmove', dragging, { passive: false });
+            document.addEventListener('mouseup', dropPiece, { passive: false });
+            document.addEventListener('touchend', dropPiece, { passive: false });
+        }
+
+        function detachGlobalDragListeners() {
+            if (!isGlobalDragAttached) return;
+            isGlobalDragAttached = false;
+            
+            document.removeEventListener('mousemove', dragging);
+            document.removeEventListener('touchmove', dragging);
+            document.removeEventListener('mouseup', dropPiece);
+            document.removeEventListener('touchend', dropPiece);
+        }
+
+        function playAgain() {
+            finishMessage.style.display = 'none';
+            overlay.classList.remove('active');
+            timerContainer.style.display = 'none';
+            piecesPanelContainer.classList.remove('active');
+            startGame();
+        }
+
+        canvas.addEventListener('mousedown', startDragging, { passive: false });
+        canvas.addEventListener('touchstart', startDragging, { passive: false });
+
+        window.addEventListener('resize', () => {
+            adjustCanvasSize();
+            drawPuzzle();
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (e.scale !== 1) e.preventDefault();
+        }, { passive: false });
+    </script>
+</body>
+
+</html>
