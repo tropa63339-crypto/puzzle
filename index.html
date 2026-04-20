@@ -439,6 +439,220 @@
             font-size: 10px;
         }
 
+        /* ===== СТРАНИЦА ВОПРОСОВ ===== */
+        .quiz-page {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .quiz-page.active {
+            display: flex;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .quiz-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .quiz-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .quiz-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f9f9f9;
+            color: #333;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .option.correct {
+            border-color: #4CAF50;
+            background: #4CAF50;
+            color: white;
+        }
+
+        .option.incorrect {
+            border-color: #FF6B6B;
+            background: #FF6B6B;
+            color: white;
+        }
+
+        .quiz-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .quiz-button {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-button.next {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .quiz-button.next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .quiz-button.home {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .quiz-button.home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6);
+        }
+
+        .quiz-progress {
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .results-page {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .results-page.active {
+            display: flex;
+        }
+
+        .results-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+        }
+
+        .results-container h1 {
+            color: #667eea;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .score-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin: 20px 0;
+        }
+
+        .score-text {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .results-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .results-button {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .results-button.again {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .results-button.home {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .results-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
         #finishMessage {
             display: none;
             background: white;
@@ -597,6 +811,31 @@
             #piecesPanelContainer {
                 height: 130px;
             }
+
+            .quiz-header h1 {
+                font-size: 28px;
+            }
+
+            .question-text {
+                font-size: 16px;
+            }
+
+            .option {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .results-container {
+                padding: 30px;
+            }
+
+            .results-container h1 {
+                font-size: 28px;
+            }
+
+            .score-display {
+                font-size: 40px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -691,6 +930,60 @@
                 min-width: 40px;
                 padding: 5px 8px;
             }
+
+            .quiz-header h1 {
+                font-size: 24px;
+            }
+
+            .quiz-header p {
+                font-size: 12px;
+            }
+
+            .question-text {
+                font-size: 15px;
+            }
+
+            .option {
+                padding: 12px;
+                font-size: 13px;
+            }
+
+            .quiz-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .quiz-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .results-container {
+                padding: 20px;
+            }
+
+            .results-container h1 {
+                font-size: 22px;
+                margin-bottom: 15px;
+            }
+
+            .score-display {
+                font-size: 36px;
+            }
+
+            .score-text {
+                font-size: 14px;
+            }
+
+            .results-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .results-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -699,13 +992,10 @@
     <!-- ГЛАВНАЯ СТРАНИЦА -->
     <div class="main-page" id="mainPage">
         <div class="left-panel">
-            <video width="640" height="360" controls>
-  <source src="video.mp4" type="video/mp4">
-  Ваш браузер не поддерживает видео.
-</video>
+            <img src="shoqan.png" alt="Шокан Уалиханов">
             <h2>Шокан Уалиханов</h2>
             <p>
-                Шокан Уалиханов (1835–1865) — выдающийся казахский ученый, этнограф, географ, офицер Российской империи и просветитель-демократ, получивший европейское образование в Омском кадетском корпусе. Он прославился исследованием Центральной Азии (экспедиция в Кашгар), изучением истории и фольклора казахов.
+                Шокан Валиханов (1835–1865) — выдающийся казахский ученый, этнограф, географ, офицер Российской империи и просветитель-демократ, получивший европейское образование в Омском кадетском корпусе. Он прославился исследованием Центральной Азии (экспедиция в Кашгар), изучением истории и фольклора казахов.
             </p>
         </div>
 
@@ -770,12 +1060,47 @@
         </div>
     </div>
 
+    <!-- СТРАНИЦА ВОПРОСОВ -->
+    <div class="quiz-page" id="quizPage">
+        <div class="quiz-container">
+            <div class="quiz-header">
+                <h1>📚 Проверка знаний</h1>
+                <p>Ответьте на вопросы о Шокане Уалиханове и его экспедициях</p>
+            </div>
+
+            <div id="quizContent"></div>
+
+            <div class="quiz-buttons">
+                <button class="quiz-button next" id="nextButton" onclick="nextQuestion()" style="display: none;">Далее →</button>
+                <button class="quiz-button next" id="finishButton" onclick="showResults()" style="display: none;">Завершить</button>
+            </div>
+
+            <div class="quiz-progress">
+                <span id="questionProgress">Вопрос 1 из 5</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА РЕЗУЛЬТАТОВ -->
+    <div class="results-page" id="resultsPage">
+        <div class="results-container">
+            <h1>🏆 Результаты</h1>
+            <div class="score-display" id="scoreDisplay">0/0</div>
+            <div class="score-text" id="scoreText">Хороший результат!</div>
+            <div id="scoreMessage"></div>
+
+            <div class="results-buttons">
+                <button class="results-button again" onclick="goHome()">← На главную</button>
+            </div>
+        </div>
+    </div>
+
     <div class="overlay" id="overlay"></div>
     <div id="finishMessage">
         <h2>🎉 Поздравляю! 🎉</h2>
         <p>Пазл собран!</p>
         <p id="timeTaken"></p>
-        <button onclick="playAgain()">Ещё раз</button>
+        <button onclick="startQuiz()">Пройти тест →</button>
         <button onclick="goHome()">На главную</button>
     </div>
 
@@ -788,6 +1113,39 @@
     </audio>
 
     <script>
+        // ===== ДАННЫЕ ВОПРОСОВ =====
+        const quizData = [
+            {
+                question: "В каком году родился Шокан Уалиханов?",
+                options: ["1835", "1840", "1830", "1845"],
+                correct: 0
+            },
+            {
+                question: "Где получил образование Шокан Уалиханов?",
+                options: ["Московский университет", "Омский кадетский корпус", "Казанский университет", "Санкт-Петербургская академия"],
+                correct: 1
+            },
+            {
+                question: "Какую знаменитую экспедицию совершил Шокан Уалиханов?",
+                options: ["Экспедиция на Алтай", "Экспедиция в Кашгар", "Экспедиция на Аральское море", "Экспедиция на Памир"],
+                correct: 1
+            },
+            {
+                question: "В каком году Шокан Уалиханов умер?",
+                options: ["1860", "1863", "1865", "1870"],
+                correct: 2
+            },
+            {
+                question: "Какая была основная область деятельности Шокана Уалиханова?",
+                options: ["Поэзия и литература", "Этнография, география и исследование", "Военные стратегии", "Дипломатия"],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswers = [];
+
         // ===== ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ =====
         function goToGame() {
             const difficulty = document.getElementById('mainDifficulty').value;
@@ -813,11 +1171,16 @@
             if (timerInterval) clearInterval(timerInterval);
             backgroundMusic.pause();
             document.getElementById('gamePage').classList.remove('active');
+            document.getElementById('quizPage').classList.remove('active');
+            document.getElementById('resultsPage').classList.remove('active');
             document.getElementById('mainPage').classList.remove('hidden');
             finishMessage.style.display = 'none';
             overlay.classList.remove('active');
             timerContainer.style.display = 'none';
             piecesPanelContainer.classList.remove('active');
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswers = [];
         }
 
         // ===== УПРАВЛЕНИЕ МУЗЫКОЙ =====
@@ -835,6 +1198,105 @@
                 musicToggle.textContent = '🔊';
                 isMusicPlaying = true;
             }
+        }
+
+        // ===== ФУНКЦИИ ВИКТОРИНЫ =====
+        function startQuiz() {
+            finishMessage.style.display = 'none';
+            overlay.classList.remove('active');
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswers = new Array(quizData.length).fill(-1);
+            
+            document.getElementById('gamePage').classList.remove('active');
+            document.getElementById('quizPage').classList.add('active');
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = quizData[currentQuestion];
+            const quizContent = document.getElementById('quizContent');
+            
+            let html = `
+                <div class="question-card">
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">
+            `;
+
+            question.options.forEach((option, index) => {
+                const isSelected = selectedAnswers[currentQuestion] === index;
+                const selectedClass = isSelected ? 'selected' : '';
+                html += `
+                    <div class="option ${selectedClass}" onclick="selectAnswer(${index})">
+                        ${option}
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                </div>
+            `;
+
+            quizContent.innerHTML = html;
+
+            // Показываем/скрываем кнопки
+            const nextButton = document.getElementById('nextButton');
+            const finishButton = document.getElementById('finishButton');
+
+            if (currentQuestion < quizData.length - 1) {
+                nextButton.style.display = 'inline-block';
+                finishButton.style.display = 'none';
+            } else {
+                nextButton.style.display = 'none';
+                finishButton.style.display = 'inline-block';
+            }
+
+            document.getElementById('questionProgress').textContent = `Вопрос ${currentQuestion + 1} из ${quizData.length}`;
+        }
+
+        function selectAnswer(index) {
+            selectedAnswers[currentQuestion] = index;
+            showQuestion();
+        }
+
+        function nextQuestion() {
+            if (selectedAnswers[currentQuestion] !== -1) {
+                currentQuestion++;
+                showQuestion();
+            }
+        }
+
+        function showResults() {
+            // Подсчитываем баллы
+            score = 0;
+            quizData.forEach((question, index) => {
+                if (selectedAnswers[index] === question.correct) {
+                    score++;
+                }
+            });
+
+            document.getElementById('quizPage').classList.remove('active');
+            document.getElementById('resultsPage').classList.add('active');
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('scoreDisplay').textContent = `${score}/${quizData.length}`;
+
+            let message = '';
+            if (percentage === 100) {
+                message = '🌟 Идеальный результат! Вы эксперт по истории и географии!';
+            } else if (percentage >= 80) {
+                message = '🎉 Отличный результат! Вы хорошо знаете историю!';
+            } else if (percentage >= 60) {
+                message = '👍 Хороший результат! Есть куда развиваться!';
+            } else if (percentage >= 40) {
+                message = '📚 Неплохо! Рекомендуем изучить материал подробнее!';
+            } else {
+                message = '💪 Пока не очень, но вы сможете!';
+            }
+
+            document.getElementById('scoreMessage').innerHTML = `<p style="font-size: 18px; color: #667eea; margin-top: 15px;">${message}</p>`;
         }
 
         // ===== ИГРОВОЙ КОД =====
@@ -1205,14 +1667,6 @@
             document.removeEventListener('touchmove', dragging);
             document.removeEventListener('mouseup', dropPiece);
             document.removeEventListener('touchend', dropPiece);
-        }
-
-        function playAgain() {
-            finishMessage.style.display = 'none';
-            overlay.classList.remove('active');
-            timerContainer.style.display = 'none';
-            piecesPanelContainer.classList.remove('active');
-            startGame();
         }
 
         canvas.addEventListener('mousedown', startDragging, { passive: false });
