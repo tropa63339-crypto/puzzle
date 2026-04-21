@@ -19,7 +19,6 @@
             width: 100%;
             height: 100%;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             overflow: hidden;
         }
 
@@ -30,6 +29,44 @@
             height: 100%;
             gap: 20px;
             padding: 20px;
+            position: relative;
+        }
+
+        .main-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: -2;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
         }
 
         .main-page.hidden {
@@ -47,16 +84,33 @@
             padding: 30px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             overflow-y: auto;
+            z-index: 10;
         }
 
-        .left-panel img {
+        .media-container {
             width: 100%;
             max-width: 300px;
-            height: auto;
+            height: 300px;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
             object-fit: cover;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .media-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .left-panel h2 {
@@ -84,6 +138,7 @@
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 10;
         }
 
         .game-header {
@@ -184,6 +239,7 @@
             flex-direction: column;
             width: 100%;
             height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .game-page.active {
@@ -742,6 +798,11 @@
             .left-panel p {
                 font-size: 14px;
             }
+
+            .media-container {
+                max-width: 250px;
+                height: 250px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -765,10 +826,6 @@
                 height: 200px;
             }
 
-            .left-panel img {
-                max-width: 250px;
-            }
-
             .left-panel h2 {
                 font-size: 20px;
                 margin-bottom: 10px;
@@ -776,6 +833,12 @@
 
             .left-panel p {
                 font-size: 13px;
+            }
+
+            .media-container {
+                max-width: 200px;
+                height: 200px;
+                margin-bottom: 15px;
             }
 
             .start-button {
@@ -865,11 +928,6 @@
                 margin-bottom: 15px;
             }
 
-            .left-panel img {
-                max-width: 200px;
-                margin-bottom: 15px;
-            }
-
             .left-panel h2 {
                 font-size: 18px;
                 margin-bottom: 8px;
@@ -878,6 +936,12 @@
             .left-panel p {
                 font-size: 12px;
                 line-height: 1.5;
+            }
+
+            .media-container {
+                max-width: 150px;
+                height: 150px;
+                margin-bottom: 15px;
             }
 
             .difficulty-selector {
@@ -989,10 +1053,25 @@
 </head>
 
 <body>
+    <!-- ФОНОВОЕ ВИДЕО -->
+    <div class="video-background" id="videoBg">
+        <video muted loop playsinline>
+            <source src="background.mp4" type="video/mp4">
+            <source src="background.webm" type="video/webm">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
     <!-- ГЛАВНАЯ СТРАНИЦА -->
     <div class="main-page" id="mainPage">
         <div class="left-panel">
-            <img src="shoqan.png" alt="Шокан Уалиханов">
+            <div class="media-container">
+                <video controls playsinline>
+                    <source src="video.mp4" type="video/mp4">
+                    <source src="video.webm" type="video/webm">
+                    Ваш браузер не поддерживает видео
+                </video>
+            </div>
             <h2>Шокан Уалиханов</h2>
             <p>
                 Шокан Валиханов (1835–1865) — выдающийся казахский ученый, этнограф, географ, офицер Российской империи и просветитель-демократ, получивший европейское образование в Омском кадетском корпусе. Он прославился исследованием Центральной Азии (экспедиция в Кашгар), изучением истории и фольклора казахов.
@@ -1241,7 +1320,6 @@
 
             quizContent.innerHTML = html;
 
-            // Показываем/скрываем кнопки
             const nextButton = document.getElementById('nextButton');
             const finishButton = document.getElementById('finishButton');
 
@@ -1269,7 +1347,6 @@
         }
 
         function showResults() {
-            // Подсчитываем баллы
             score = 0;
             quizData.forEach((question, index) => {
                 if (selectedAnswers[index] === question.correct) {
@@ -1285,7 +1362,7 @@
 
             let message = '';
             if (percentage === 100) {
-                message = '🌟 Идеальный результат! Вы эксперт по истории и географии!';
+                message = '🌟 Идеальный результат! Вы эксперт по истории Казахстана!';
             } else if (percentage >= 80) {
                 message = '🎉 Отличный результат! Вы хорошо знаете историю!';
             } else if (percentage >= 60) {
@@ -1680,6 +1757,11 @@
         document.addEventListener('touchmove', (e) => {
             if (e.scale !== 1) e.preventDefault();
         }, { passive: false });
+
+        // Загрузка начальной картинки при загрузке страницы
+        window.addEventListener('load', () => {
+            loadImage();
+        });
     </script>
 </body>
 
